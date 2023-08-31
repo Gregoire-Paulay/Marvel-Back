@@ -79,6 +79,21 @@ app.get("/comics/:characterId", async (req, res) => {
   }
 });
 
+// 5 - Route qui renvoie les infos spécifique d'un personnage
+app.get("/character/:characterId", async (req, res) => {
+  try {
+    console.log(req.params);
+    const response = await axios.get(
+      `https://lereacteur-marvel-api.herokuapp.com/character/${req.params.characterId}?apiKey=${process.env.API_KEY}`
+    );
+
+    console.log(response.data);
+    return res.status(201).json(response.data);
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+});
+
 // Fin du serveur
 app.all("*", (req, res) => {
   return res.status(404).json("Cette page n'existe pas: essaye autre chose");
