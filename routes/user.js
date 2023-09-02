@@ -19,7 +19,9 @@ router.post("/user/signup", async (req, res) => {
     if (!username || !email || !password) {
       return res
         .status(400)
-        .json("Renseignez tout les paramètres pour pouvoir vous inscrire");
+        .json({
+          message: "Renseignez tout les paramètres pour pouvoir vous inscrire",
+        });
     } else {
       if (foundUser === null) {
         // C'est bien un nouvel utilisateur (email non existant en BDD)
@@ -43,11 +45,14 @@ router.post("/user/signup", async (req, res) => {
         const responseObject = {
           email: email,
           account: { username: username },
+          token: userToken,
         };
         console.log("responseObject ===>", responseObject);
         return res.status(201).json(responseObject);
       } else {
-        return res.status(409).json("Cette adresse mail est déjà enregstré");
+        return res
+          .status(409)
+          .json({ message: "Cette adresse mail est déjà enregistré" });
       }
     }
   } catch (error) {
