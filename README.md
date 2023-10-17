@@ -88,7 +88,7 @@ Description : login an user
 
 <br/>
 
-### Running the project
+## Running the project
 
 Clone this repository :
 
